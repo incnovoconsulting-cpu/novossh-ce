@@ -1,0 +1,56 @@
+appId: app.novossh
+productName: NovoSSH
+copyright: Copyright © 2025 Novo Consulting Inc
+
+directories:
+  output: dist-desktop
+  buildResources: electron/resources
+
+files:
+  - dist/**/*
+  - dist-electron/**/*
+  - server/dist/**/*
+  - electron/resources/**/*
+  - package.json
+
+extraMetadata:
+  main: dist-electron/main.js
+  type: commonjs
+
+npmRebuild: false
+
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+  icon: electron/resources/icon.ico
+  requestedExecutionLevel: asInvoker
+  signAndEditExecutable: false
+  sign: false
+
+nsis:
+  oneClick: false
+  perMachine: false
+  allowToChangeInstallationDirectory: true
+  installerIcon: electron/resources/icon.ico
+  uninstallerIcon: electron/resources/icon.ico
+  installerHeaderIcon: electron/resources/icon.ico
+  createDesktopShortcut: true
+  createStartMenuShortcut: true
+  shortcutName: NovoSSH
+
+linux:
+  target:
+    - target: AppImage
+    - target: deb
+  icon: electron/resources/
+  category: Development
+  desktop:
+    Name: NovoSSH
+    Comment: SSH terminal client
+    Categories: Network;RemoteAccess;TerminalEmulator;
+
+publish:
+  provider: github
+  owner: incnovoconsulting-cpu
+  repo: novossh

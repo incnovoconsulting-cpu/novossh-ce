@@ -1,0 +1,49 @@
+node_modules
+dist
+.vite
+.DS_Store
+*.log
+.env
+.env.local
+server/dist
+.claude
+coverage
+*.pem
+*.key
+*.crt
+server.crt
+server.key
+*.exe
+graphify-out/
+test-results/
+.agents/
+.agents/plugins/
+dist-desktop/
+
+# Knowledge graph output
+graphify-out/
+
+# Android signing secrets
+android/keystores.properties
+android/novossh.keystore
+android/*.keystore
+android/*.jks
+android/service-account.json
+CLAUDE.md
+.claude/
+.remember/
+NovoSSH-Windows-x64.tar.gz
+novossh-v1.6.0-internal.apk
+
+# App Store Connect API keys - never commit
+*.p8
+ios/fastlane/api_key.json
+
+# App Store status-check state (local only)
+.appstore-status.json
+novossh*.png
+*.apk
+
+# Firebase config (contributor-specific, use google-services.json.example)
+android/app/google-services.json
+GoogleService-Info.plist

@@ -1,0 +1,101 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  transition: background 0.15s;
+}
+
+.container:hover {
+  background: var(--bg-hover, #f9fafb);
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 500;
+  color: var(--text-primary, #000);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 14px;
+}
+
+.meta {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 4px;
+  font-size: 12px;
+  color: var(--text-muted, #9ca3af);
+}
+
+.type {
+  background: var(--bg-tertiary, #f3f4f6);
+  padding: 2px 8px;
+  border-radius: 3px;
+  text-transform: capitalize;
+}
+
+.time {
+  color: var(--text-muted, #9ca3af);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.actionButton {
+  padding: 6px 8px;
+  background: var(--bg-tertiary, #f3f4f6);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.actionButton:hover {
+  background: var(--bg-secondary, #e5e7eb);
+}
+
+.actionButton.delete:hover {
+  background: var(--error-light, #fee2e2);
+}
+
+.actionButton.connect {
+  background: var(--accent, #6366f1);
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 10px;
+}
+
+.actionButton.connect:hover {
+  background: var(--accent-hover, #4f46e5);
+}
+
+.actionButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.editInput {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary, #000);
+  background: var(--bg-secondary, #f3f4f6);
+  border: 1px solid var(--accent, #6366f1);
+  border-radius: 4px;
+  padding: 2px 6px;
+  outline: none;
+}

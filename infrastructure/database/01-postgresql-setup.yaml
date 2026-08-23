@@ -1,0 +1,228 @@
+---
+# PostgreSQL Operator - CloudNativePG for managed PostgreSQL clusters
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: novossh-postgres
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: database
+spec:
+  description: "NovoSSH Production PostgreSQL Cluster"
+  imageName: ghcr.io/cloudnative-pg/postgresql:16-alpine
+
+  # Number of instances (primary + replicas)
+  instances: 3
+
+  # Bootstrap configuration
+  bootstrap:
+    initdb:
+      database: novossh
+      owner: novossh_user
+      secret:
+        name: novossh-db-credentials
+      postInitApplicationSQL:
+      - |
+        -- Enable required extensions
+        CREATE EXTENSION IF NOT EXISTS pgcrypto;
+        CREATE EXTENSION IF NOT EXISTS pg_trgm;
+        CREATE EXTENSION IF NOT EXISTS btree_gin;
+        CREATE EXTENSION IF NOT EXISTS btree_gist;
+        CREATE EXTENSION IF NOT EXISTS uuid-ossp;
+
+        -- Create application user with limited permissions
+        CREATE USER IF NOT EXISTS novossh_app WITH PASSWORD 'CHANGE_ME_APP_PASSWORD';
+        GRANT CONNECT ON DATABASE novossh TO novossh_app;
+
+        -- Create read-only user for backups
+        CREATE USER IF NOT EXISTS novossh_readonly WITH PASSWORD 'CHANGE_ME_READONLY_PASSWORD';
+        GRANT CONNECT ON DATABASE novossh TO novossh_readonly;
+        ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO novossh_readonly;
+
+  # Storage configuration
+  storage:
+    size: 100Gi
+    storageClass: novossh-fast-ssd
+
+  # Backup configuration
+  backup:
+    barmanObjectStore:
+      wal:
+        compression: gzip
+        maxParallel: 4
+      data:
+        compression: gzip
+      destinationPath: "s3://novossh-backups/postgres/"
+      s3Credentials:
+        accessKeyId:
+          name: novossh-s3-credentials
+          key: access_key
+        secretAccessKey:
+          name: novossh-s3-credentials
+          key: secret_key
+        region: us-east-1
+      tags:
+        - environment: production
+        - cluster: novossh-postgres
+      retentionPolicy: "30d"
+      serverNameList:
+      - novossh-postgres
+
+  # Recovery configuration
+  recovery:
+    targetTLI: latest
+    targetName: latest
+    sourceClusterExternalSnapshot: false
+
+  # Replication configuration
+  postgresql:
+    parameters:
+      # Connection settings
+      max_connections: "500"
+      superuser_reserved_connections: "10"
+
+      # Memory settings
+      shared_buffers: "2GB"
+      effective_cache_size: "6GB"
+      maintenance_work_mem: "512MB"
+      work_mem: "4MB"
+
+      # WAL settings
+      wal_level: replica
+      max_wal_senders: "10"
+      max_replication_slots: "10"
+      wal_keep_size: "10GB"
+      hot_standby: "on"
+
+      # Replication settings
+      synchronous_commit: "remote_apply"
+      synchronous_standby_names: "ANY 1 (*)"
+
+      # Performance
+      random_page_cost: "1.1"
+      effective_io_concurrency: "200"
+
+      # Logging
+      log_min_duration_statement: "1000"
+      log_connections: "on"
+      log_disconnections: "on"
+      log_duration: "on"
+      log_statement: "all"
+      log_lock_waits: "on"
+
+      # Autovacuum
+      autovacuum: "on"
+      autovacuum_naptime: "10s"
+      autovacuum_vacuum_threshold: "50"
+      autovacuum_analyze_threshold: "50"
+
+  # Monitoring
+  monitoring:
+    enabled: true
+    prometheusRule:
+      enabled: true
+
+  # Resource limits
+  resources:
+    requests:
+      memory: "2Gi"
+      cpu: "1"
+    limits:
+      memory: "4Gi"
+      cpu: "2"
+
+  # Affinity for pod distribution
+  affinity:
+    podAntiAffinity: preferred
+    topologyKey: kubernetes.io/hostname
+
+  # Primary update strategy (when promoting a replica)
+  primaryUpdateStrategy: unsupervised
+
+---
+# Secret for Database Credentials
+apiVersion: v1
+kind: Secret
+metadata:
+  name: novossh-db-credentials
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+type: Opaque
+stringData:
+  username: novossh_user
+  password: "CHANGE_ME_STRONG_PASSWORD_MIN_32_CHARS"
+  app_password: "CHANGE_ME_APP_PASSWORD_MIN_32_CHARS"
+  readonly_password: "CHANGE_ME_READONLY_PASSWORD_MIN_32_CHARS"
+
+---
+# Secret for S3 Backup Credentials
+apiVersion: v1
+kind: Secret
+metadata:
+  name: novossh-s3-credentials
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+    app.kubernetes.io/component: backup
+type: Opaque
+stringData:
+  access_key: "CHANGE_ME_AWS_ACCESS_KEY"
+  secret_key: "CHANGE_ME_AWS_SECRET_KEY"
+
+---
+# Service for Primary Database Connection
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-primary
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+spec:
+  type: ClusterIP
+  selector:
+    cnpg.io/cluster: novossh-postgres
+    role: primary
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+
+---
+# Service for Replica Database Connection (read-only)
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-replicas
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+spec:
+  type: ClusterIP
+  selector:
+    cnpg.io/cluster: novossh-postgres
+    role: replica
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432
+
+---
+# Service for All Instances (read-write + read-only load balancing)
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgres-all
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: postgresql
+spec:
+  type: ClusterIP
+  selector:
+    cnpg.io/cluster: novossh-postgres
+  ports:
+  - name: postgresql
+    port: 5432
+    targetPort: 5432

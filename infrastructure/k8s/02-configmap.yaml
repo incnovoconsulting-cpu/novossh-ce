@@ -1,0 +1,241 @@
+---
+# ConfigMap for NovoSSH Application Configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: novossh-config
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/component: config
+data:
+  # Server Configuration
+  NODE_ENV: "production"
+  SERVICE_VERSION: "0.1.0"
+  HOST: "0.0.0.0"
+  PORT: "8787"
+
+  # CORS & Origin Configuration
+  ALLOWED_ORIGINS: "https://novossh.example.com,https://app.novossh.example.com"
+  ALLOW_CREDENTIALS: "true"
+  TRUST_PROXY: "1"
+
+  # Logging & Monitoring
+  LOG_LEVEL: "info"
+  LOG_FORMAT: "json"
+  REQUEST_LOGGING: "true"
+  METRICS_ENABLED: "true"
+
+  # SSH Bridge Configuration
+  SSH_TIMEOUT: "30000"
+  SSH_KEEPALIVE_INTERVAL: "30000"
+  MAX_SSH_CONNECTIONS_PER_USER: "10"
+  MAX_CONCURRENT_SSH_OPS: "100"
+
+  # Request Configuration
+  MAX_REQUEST_SIZE: "2mb"
+  WS_MAX_FRAME_SIZE: "1mb"
+  REQUEST_ID_HEADER: "X-Request-ID"
+
+  # Health Check Configuration
+  HEALTH_CHECK_ENABLED: "true"
+  HEALTH_CHECK_INTERVAL: "30000"
+  MEMORY_THRESHOLD_CRITICAL: "90"
+  MEMORY_THRESHOLD_DEGRADED: "75"
+  DB_RESPONSE_TIME_DEGRADED: "1000"
+  DB_RESPONSE_TIME_UNHEALTHY: "5000"
+
+  # Graceful Shutdown
+  SHUTDOWN_GRACE_PERIOD: "30000"
+  SHUTDOWN_FORCE_TIMEOUT: "60000"
+  MAX_IN_FLIGHT_REQUESTS: "10000"
+
+  # Feature Flags
+  FEATURE_OFFLINE_SYNC: "true"
+  FEATURE_P2P_SYNC: "true"
+  FEATURE_SESSION_RECORDING: "true"
+  FEATURE_PORT_FORWARDING: "true"
+
+  # Database Configuration (pooling)
+  DB_POOL_SIZE: "20"
+  DB_POOL_IDLE_TIMEOUT: "30000"
+  DB_POOL_REAP_INTERVAL: "1000"
+  DB_POOL_CONNECTION_TIMEOUT: "10000"
+  DB_SSL_MODE: "require"
+
+  # Rate Limiting
+  RATE_LIMIT_REQUESTS: "1000"
+  RATE_LIMIT_WINDOW: "900000"
+  AUTH_RATE_LIMIT_REQUESTS: "5"
+  AUTH_RATE_LIMIT_WINDOW: "900000"
+
+---
+# ConfigMap for Prometheus scrape configuration
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: prometheus
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 30s
+      evaluation_interval: 30s
+      external_labels:
+        cluster: 'production'
+        environment: 'prod'
+
+    alerting:
+      alertmanagers:
+        - static_configs:
+            - targets:
+                - alertmanager:9093
+
+    rule_files:
+      - '/etc/prometheus/rules/*.yml'
+
+    scrape_configs:
+      - job_name: 'novossh'
+        static_configs:
+          - targets: ['localhost:9090']
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: instance
+
+      - job_name: 'kubernetes-pods'
+        kubernetes_sd_configs:
+          - role: pod
+        relabel_configs:
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+            action: keep
+            regex: true
+          - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+            action: replace
+            target_label: __metrics_path__
+            regex: (.+)
+          - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+            action: replace
+            regex: ([^:]+)(?::\d+)?;(\d+)
+            replacement: $1:$2
+            target_label: __address__
+
+---
+# ConfigMap for Alert Rules
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-rules
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: prometheus
+data:
+  alert-rules.yml: |
+    groups:
+      - name: novossh_alerts
+        interval: 30s
+        rules:
+          # Pod availability alerts
+          - alert: PodCrashLooping
+            expr: rate(kube_pod_container_status_restarts_total[15m]) > 0
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Pod {{ $labels.pod }} is crash looping"
+              description: "Pod {{ $labels.namespace }}/{{ $labels.pod }} has restarted {{ $value }} times in the last 15 minutes"
+
+          # Database alerts
+          - alert: DatabaseConnectionPoolExhausted
+            expr: db_pool_available_connections == 0
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Database connection pool exhausted"
+              description: "Connection pool has no available connections. Pending: {{ $value }}"
+
+          - alert: DatabaseReplicationLag
+            expr: pg_replication_lag_seconds > 10
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Database replication lag detected"
+              description: "Replication lag is {{ $value }} seconds (threshold: 10s)"
+
+          - alert: DatabaseResponseTimeHigh
+            expr: histogram_quantile(0.95, rate(db_query_duration_seconds_bucket[5m])) > 1
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Database response time high"
+              description: "P95 query latency is {{ $value }}s"
+
+          # Memory and CPU alerts
+          - alert: PodMemoryUsageHigh
+            expr: container_memory_usage_bytes{pod=~"novossh.*"} / container_spec_memory_limit_bytes > 0.85
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod memory usage high: {{ $labels.pod }}"
+              description: "Memory usage is {{ $value | humanizePercentage }}"
+
+          - alert: PodMemoryCritical
+            expr: container_memory_usage_bytes{pod=~"novossh.*"} / container_spec_memory_limit_bytes > 0.95
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Pod memory critical: {{ $labels.pod }}"
+              description: "Memory usage is {{ $value | humanizePercentage }}"
+
+          - alert: PodCPUUsageHigh
+            expr: rate(container_cpu_usage_seconds_total{pod=~"novossh.*"}[5m]) > 0.8
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod CPU usage high: {{ $labels.pod }}"
+              description: "CPU usage is {{ $value | humanizePercentage }}"
+
+          # Application health alerts
+          - alert: HighErrorRate
+            expr: rate(http_requests_total{status=~"5.."}[5m]) > 0.05
+            for: 5m
+            labels:
+              severity: critical
+            annotations:
+              summary: "High error rate detected"
+              description: "Error rate is {{ $value | humanizePercentage }}"
+
+          - alert: HighLatency
+            expr: histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High request latency detected"
+              description: "P95 latency is {{ $value }}s"
+
+          # Disk space alerts
+          - alert: DiskSpaceLow
+            expr: node_filesystem_avail_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes < 0.15
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Disk space low on {{ $labels.device }}"
+              description: "Available space is {{ $value | humanizePercentage }} of total"
+
+          - alert: DiskSpaceCritical
+            expr: node_filesystem_avail_bytes{fstype=~"ext4|xfs"} / node_filesystem_size_bytes < 0.05
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Disk space critical on {{ $labels.device }}"
+              description: "Available space is {{ $value | humanizePercentage }} of total"

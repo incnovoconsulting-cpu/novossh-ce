@@ -1,0 +1,4 @@
+version: 1
+bundleID: app.novossh.ios
+infoPath: NovoSSH/Info.plist
+entitlementsPath: NovoSSH.entitlements

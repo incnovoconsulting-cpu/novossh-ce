@@ -1,0 +1,90 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 20px;
+  border-bottom: 1px solid var(--border-color, #e5e7eb);
+  background: var(--bg-secondary, #f9fafb);
+}
+
+.title {
+  flex: 1;
+}
+
+.title h2 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  color: var(--text-primary, #000);
+}
+
+.description {
+  margin: 0;
+  font-size: 14px;
+  color: var(--text-secondary, #6b7280);
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+}
+
+.syncButton,
+.shareButton,
+.createButton {
+  padding: 8px 16px;
+  border: 1px solid var(--border-color, #e5e7eb);
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s;
+  background: var(--bg-primary, #fff);
+}
+
+.createButton {
+  background: var(--accent-color, #3b82f6);
+  color: white;
+  border-color: var(--accent-color, #3b82f6);
+}
+
+.progressBar {
+  height: 2px;
+  background: var(--bg-tertiary, #f3f4f6);
+}
+
+.progress {
+  height: 100%;
+  background: var(--accent-color, #3b82f6);
+  transition: width 0.3s;
+}
+
+.error {
+  padding: 12px 20px;
+  background: var(--error-light, #fee2e2);
+  color: var(--error-dark, #991b1b);
+  border-bottom: 1px solid var(--error-border, #fecaca);
+}
+
+.conflictAlert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: var(--warning-light, #fef3c7);
+  color: var(--warning-dark, #92400e);
+  border-bottom: 1px solid var(--warning-border, #fde68a);
+}
+
+.loading {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted, #9ca3af);
+}

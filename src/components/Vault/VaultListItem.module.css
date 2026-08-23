@@ -1,0 +1,67 @@
+.container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-left: 3px solid transparent;
+  font-size: 14px;
+}
+
+.container:hover {
+  background: var(--bg-hover, #f3f4f6);
+}
+
+.container.selected {
+  background: var(--bg-active, #eff6ff);
+  border-left-color: var(--accent-color, #3b82f6);
+}
+
+.icon {
+  font-size: 18px;
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 500;
+  color: var(--text-primary, #000);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.meta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--text-muted, #9ca3af);
+}
+
+.shared {
+  background: var(--accent-light, #dbeafe);
+  color: var(--accent-dark, #1e40af);
+  padding: 2px 6px;
+  border-radius: 2px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.time {
+  color: var(--text-muted, #9ca3af);
+}
+
+.indicator {
+  width: 3px;
+  height: 24px;
+  background: var(--accent-color, #3b82f6);
+  border-radius: 1.5px;
+}

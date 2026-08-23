@@ -1,0 +1,7 @@
+name = "novossh-ws-proxy"
+main = "src/index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+ORIGIN_HOST = "ssh.novossh.com"
+ORIGIN_PORT = "8787"

@@ -1,0 +1,32 @@
+services:
+  novossh:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: novossh-server
+    network_mode: host
+    env_file: .env
+    volumes:
+      - ./server.crt:/app/server.crt:ro
+      - ./server.key:/app/server.key:ro
+    environment:
+      HOST: "0.0.0.0"
+      PORT: "8787"
+      NODE_ENV: production
+      SSL_CERT_PATH: "/app/server.crt"
+      SSL_KEY_PATH: "/app/server.key"
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "--no-check-certificate", "https://localhost:8787/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    deploy:
+      resources:
+        limits:
+          cpus: '1.5'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    restart: unless-stopped

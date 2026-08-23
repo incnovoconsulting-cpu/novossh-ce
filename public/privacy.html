@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — NovoSSH</title>
+  <meta name="description" content="NovoSSH privacy policy. Learn how NovoSSH handles your SSH credentials and connection data." />
+  <link rel="canonical" href="https://novossh.com/privacy" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background: #06080c; color: #e2e8f0; line-height: 1.7; }
+    .container { max-width: 720px; margin: 0 auto; padding: 48px 24px 80px; }
+    a { color: #00e5ff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    h1 { font-size: 2rem; font-weight: 700; color: #fff; margin-bottom: 4px; }
+    .date { font-size: 0.875rem; color: #64748b; margin-bottom: 32px; }
+    h2 { font-size: 1.25rem; font-weight: 600; color: #fff; margin-top: 32px; margin-bottom: 12px; }
+    h3 { font-size: 1.05rem; font-weight: 500; color: #fff; margin-top: 20px; margin-bottom: 8px; }
+    p { margin-bottom: 12px; color: #cbd5e1; }
+    ul { margin: 8px 0 12px 24px; }
+    li { margin-bottom: 6px; color: #cbd5e1; }
+    li strong { color: #f1f5f9; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+    th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    th { color: #fff; font-weight: 600; }
+    td { color: #cbd5e1; }
+    .mono { font-family: 'SF Mono', Menlo, Monaco, Consolas, monospace; color: #00e5ff; }
+    .highlight { color: #00e5ff; font-weight: 500; }
+    .footer { margin-top: 40px; padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 0.875rem; color: #64748b; }
+    .back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.875rem; color: #94a3b8; margin-bottom: 24px; }
+    .back:hover { color: #fff; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a class="back" href="/">&larr; Back to NovoSSH</a>
+
+    <h1>Privacy Policy</h1>
+    <p class="date">Effective Date: June 13, 2026 &middot; Last Updated: June 20, 2026</p>
+
+    <section>
+      <h2>Overview</h2>
+      <p>NovoSSH is a privacy-first SSH terminal client for Android, iOS, Windows, macOS, Linux, and web. We believe your data is yours, and we're transparent about how we handle it.</p>
+      <p class="highlight">Most importantly: All data is stored locally on your device. We don't have access to your SSH credentials, connection history, or any other data you store in NovoSSH.</p>
+    </section>
+
+    <section>
+      <h2>What Data We Collect and Store</h2>
+      <h3>On Your Device (Encrypted)</h3>
+      <p>When you use NovoSSH, the following data is stored <strong>locally on your device</strong> in an encrypted database:</p>
+      <ul>
+        <li><strong>SSH Connection Details</strong> — Hostnames, IP addresses, port numbers, usernames, authentication methods, SSH private keys</li>
+        <li><strong>Terminal History</strong> — Command history for each connection, session duration and timestamps</li>
+        <li><strong>Snippets &amp; Configuration</strong> — Command snippets, user preferences, biometric lock settings, port forwarding rules</li>
+      </ul>
+
+      <h3>Encryption</h3>
+      <ul>
+        <li>All sensitive data is encrypted using <strong>AES-256</strong> (EncryptedSharedPreferences on Android, Keychain on iOS)</li>
+        <li>SSH private keys are double-encrypted: first by the SSH library, then by platform-encrypted storage</li>
+        <li>Encryption keys are stored securely using the platform's secure enclave / keystore system</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Analytics & Crash Reporting</h2>
+      <p>We use Firebase Analytics and Crashlytics to improve the app. This collects:</p>
+      <ul>
+        <li><strong>Crash reports</strong> — Anonymous crash data (stack traces, device info) to fix bugs</li>
+        <li><strong>Basic usage events</strong> — Feature usage counts (e.g., "SSH connection attempted") with no personal information</li>
+      </ul>
+      <p><strong>We do NOT collect:</strong> SSH credentials, connection details, commands executed, file contents, or any personally identifiable information.</p>
+    </section>
+
+    <section>
+      <h2>What We Don't Do</h2>
+      <ul>
+        <li><strong>No Cloud Syncing</strong> — SSH data stays on your device</li>
+        <li><strong>No Third-Party Data Sharing</strong> — Your SSH data is never shared with vendors</li>
+        <li><strong>No Ads</strong> — We don't display advertisements</li>
+        <li><strong>No Behavioral Tracking</strong> — No cookies, fingerprinting, or user profiling</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Internet Connection</h2>
+      <p>NovoSSH requires <strong>INTERNET</strong> permission to establish SSH connections to remote servers and transfer files via SFTP.</p>
+      <p><strong>The app does not transmit any of your stored data to our servers.</strong> It only connects directly to SSH servers you explicitly choose.</p>
+    </section>
+
+    <section>
+      <h2>Android Permissions</h2>
+      <table>
+        <thead>
+          <tr><th>Permission</th><th>Why We Need It</th></tr>
+        </thead>
+        <tbody>
+          <tr><td class="mono">INTERNET</td><td>SSH connections to remote servers</td></tr>
+          <tr><td class="mono">USE_BIOMETRIC</td><td>Fingerprint / face lock (optional)</td></tr>
+          <tr><td class="mono">USE_FINGERPRINT</td><td>Legacy biometric support</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Data Retention</h2>
+      <ul>
+        <li><strong>Your Control</strong>: You control when data is deleted</li>
+        <li><strong>On Uninstall</strong>: All data is deleted when you uninstall the app</li>
+        <li><strong>No Backup</strong>: We don't backup your data to cloud services</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Third-Party Libraries</h2>
+      <ul>
+        <li><strong>JSch</strong>: SSH protocol implementation (Android)</li>
+        <li><strong>libssh2 / NIO.SSH</strong>: SSH protocol implementation (iOS/macOS)</li>
+        <li><strong>AndroidX / Jetpack Compose</strong>: Google's Android libraries</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Children's Privacy</h2>
+      <p>NovoSSH is not directed at children under 13. We do not knowingly collect information from children.</p>
+    </section>
+
+    <section>
+      <h2>Changes to This Policy</h2>
+      <p>We may update this policy from time to time. Changes will be posted on this page with an updated effective date.</p>
+    </section>
+
+    <section>
+      <h2>Contact Us</h2>
+      <p>Questions about this privacy policy?</p>
+      <ul>
+        <li><strong>Email</strong>: <a href="mailto:privacy@novossh.com">privacy@novossh.com</a></li>
+        <li><strong>Support</strong>: <a href="mailto:support@novossh.com">support@novossh.com</a></li>
+        <li><strong>Website</strong>: <a href="https://novossh.com">https://novossh.com</a></li>
+      </ul>
+    </section>
+
+    <div class="footer">
+      <p>&copy; 2026 NovoConsulting Inc. All rights reserved.</p>
+    </div>
+  </div>
+</body>
+</html>

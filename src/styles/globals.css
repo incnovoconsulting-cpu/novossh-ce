@@ -1,0 +1,408 @@
+@import '@xterm/xterm/css/xterm.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Geist Sans';
+  src: url('/fonts/Geist-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Geist Mono';
+  src: url('/fonts/GeistMono-Variable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  color-scheme: dark;
+
+  /* StyleSeed Semantic Tokens — Dark Mode */
+  --brand: #00e5ff;
+  --brand-tint: rgba(0, 229, 255, 0.06);
+  --destructive: #ff3b3b;
+  --success: #00ff88;
+  --warning: #ffb800;
+  --info: #3b82f6;
+
+  /* Text Hierarchy — 5 levels (StyleSeed Rule #3) */
+  --text-strong: #e2e8f0;
+  --text-primary: #c8d6e5;
+  --text-secondary: #8a9bb0;
+  --text-tertiary: #5a6a7d;
+  --text-disabled: #3a4758;
+
+  /* Surfaces — dark mode (card brighter than bg, Rule #45) */
+  --surface-page: #06080c;
+  --surface-card: #0e1319;
+  --surface-subtle: #121820;
+  --surface-muted: #1c2430;
+
+  /* Shadows — max 8% opacity (Rule #12, Rule #7) */
+  --shadow-card: 0 1px 3px rgba(0, 229, 255, 0.03);
+  --shadow-card-hover: 0 2px 6px rgba(0, 229, 255, 0.06);
+  --shadow-elevated: 0 4px 16px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.04);
+  --shadow-modal: 0 8px 32px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.06);
+
+  /* Motion Tokens (StyleSeed §59) */
+  --duration-fast: 100ms;
+  --duration-normal: 200ms;
+  --duration-slow: 350ms;
+  --ease-default: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Border Radius — consistent personality */
+  --radius: 0.625rem;
+
+  /* Vault UI compatibility aliases — the Vault components were built
+     against a generic light-theme token set; map them onto the real
+     dark-mode tokens above instead of falling back to their hardcoded
+     light defaults (#fff, #3b82f6, etc). */
+  --bg-primary: var(--surface-card);
+  --bg-secondary: var(--surface-subtle);
+  --bg-tertiary: var(--surface-muted);
+  --bg-hover: var(--surface-subtle);
+  --bg-active: var(--surface-muted);
+  --bg-empty: var(--surface-page);
+  --bg-item: var(--surface-card);
+  --bg-item-hover: var(--surface-subtle);
+
+  --border-color: rgba(255, 255, 255, 0.08);
+  --border-empty: rgba(255, 255, 255, 0.08);
+  --border-item: rgba(255, 255, 255, 0.08);
+  --border-list: rgba(255, 255, 255, 0.08);
+
+  --text-muted: var(--text-tertiary);
+
+  --accent: var(--brand);
+  --accent-color: var(--brand);
+  --accent-dark: var(--brand);
+  --accent-hover: var(--brand);
+  --accent-light: var(--brand-tint);
+
+  --error-light: rgba(255, 59, 59, 0.12);
+  --error-dark: var(--destructive);
+  --error-border: rgba(255, 59, 59, 0.3);
+
+  --warning-light: rgba(255, 184, 0, 0.12);
+  --warning-dark: var(--warning);
+  --warning-border: rgba(255, 184, 0, 0.3);
+
+  --info-light: rgba(59, 130, 246, 0.12);
+  --info-dark: var(--info);
+
+  --status-connected: var(--success);
+  --status-connecting: var(--warning);
+  --status-disconnected: var(--text-tertiary);
+  --status-online: var(--success);
+  --status-offline: var(--text-tertiary);
+  --status-badge-bg: var(--surface-subtle);
+  --status-badge-text: var(--text-primary);
+
+  --sync-bg: var(--surface-subtle);
+  --sync-border: rgba(255, 255, 255, 0.08);
+  --sync-text: var(--text-primary);
+  --sync-success-bg: rgba(0, 255, 136, 0.12);
+  --sync-success-border: rgba(0, 255, 136, 0.3);
+  --sync-error-bg: rgba(255, 59, 59, 0.12);
+  --sync-error-border: rgba(255, 59, 59, 0.3);
+  --sync-progress-bg: var(--surface-muted);
+  --sync-progress-fill: var(--brand);
+
+  --btn-sync-bg: var(--surface-subtle);
+  --btn-sync-bg-hover: var(--surface-muted);
+  --btn-sync-border: rgba(255, 255, 255, 0.08);
+  --btn-sync-border-hover: rgba(255, 255, 255, 0.16);
+  --btn-sync-text: var(--text-primary);
+
+  --badge-bg: var(--surface-subtle);
+  --badge-text: var(--text-primary);
+  --badge-spinner: var(--brand);
+
+  --tooltip-bg: var(--surface-muted);
+  --tooltip-border: rgba(255, 255, 255, 0.08);
+  --tooltip-text: var(--text-primary);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Terminal app needs overflow hidden; landing page scrolls */
+#root > div:not(.landing-page) {
+  overflow: hidden;
+}
+
+body {
+  font-feature-settings: 'cv11', 'ss01', 'ss03', 'cv01';
+  background: var(--surface-page);
+  color: var(--text-primary);
+}
+
+/* StyleSeed Rule #72: Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Custom scrollbar — refined dark tech */
+*::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.06);
+  border-radius: 3px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 229, 255, 0.14);
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb {
+  background: rgba(0, 229, 255, 0.1);
+}
+
+/* xterm tweaks */
+.xterm,
+.xterm .xterm-viewport,
+.xterm .xterm-screen {
+  padding: 8px 10px;
+}
+.xterm .xterm-screen canvas {
+  outline: none;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-md px-3 py-2 text-sm font-medium transition-all duration-150 disabled:opacity-40 disabled:pointer-events-none;
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .btn-primary {
+    @apply btn bg-neon text-ink-950 font-semibold hover:bg-neon-400 active:scale-[0.98] active:translate-y-px;
+    box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.2);
+    transition-property: background-color, box-shadow, transform, opacity;
+  }
+  .btn-primary:hover {
+    box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.35);
+  }
+  .btn-secondary {
+    @apply btn bg-ink-700 text-slate-200 hover:bg-ink-650 border border-white/5 hover:border-white/10;
+  }
+  .btn-ghost {
+    @apply btn text-slate-300 hover:bg-white/5 hover:text-white;
+  }
+  .btn-danger {
+    @apply btn bg-terminal-red/90 text-white hover:bg-terminal-red active:scale-[0.98];
+    box-shadow: 0 0 0 1px rgba(255, 59, 59, 0.3);
+  }
+  .input {
+    @apply w-full rounded-md border border-white/5 bg-ink-900 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500/60 outline-none transition-all duration-150;
+    min-height: 44px;
+  }
+  .input:focus {
+    @apply border-neon/40 ring-1 ring-neon/20 bg-ink-850;
+  }
+  .label {
+    @apply mb-1.5 block text-[12px] font-medium uppercase tracking-[0.05em] text-slate-400;
+  }
+  .panel {
+    @apply rounded-2xl border border-white/[0.04];
+    background: var(--surface-card);
+    box-shadow: var(--shadow-card);
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full bg-white/5 px-2.5 py-1 text-[12px] font-medium text-slate-400 border border-white/5;
+  }
+  .neon-border {
+    @apply border border-neon/20;
+    box-shadow: 0 0 0 1px rgba(0, 229, 255, 0.15), 0 0 8px rgba(0, 229, 255, 0.08);
+  }
+
+  /* StyleSeed card hover (Rule #12) */
+  .card-hover {
+    transition: box-shadow var(--duration-normal) var(--ease-default),
+                transform var(--duration-normal) var(--ease-default);
+  }
+  .card-hover:hover {
+    box-shadow: var(--shadow-card-hover);
+    transform: translateY(-1px);
+  }
+
+  /* StyleSeed SectionCard (Rule #14, Type A) */
+  .section-card {
+    @apply rounded-2xl border border-white/[0.04] p-6;
+    background: var(--surface-card);
+    box-shadow: var(--shadow-card);
+    margin-left: 24px;
+    margin-right: 24px;
+  }
+
+  /* StyleSeed KPI card (Rule #14, Type B) */
+  .kpi-card {
+    @apply rounded-2xl border border-white/[0.04] p-5;
+    background: var(--surface-card);
+    box-shadow: var(--shadow-card);
+  }
+
+  /* Focus ring (StyleSeed Rule #72, a11y) */
+  .focus-ring {
+    @apply outline-none;
+  }
+  .focus-ring:focus-visible {
+    @apply ring-2 ring-neon/60 ring-offset-2 ring-offset-ink-950;
+  }
+
+  /* Touch target (StyleSeed Rule #72, Rule #8) */
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Trend indicator (StyleSeed Rule #4) */
+  .trend-up {
+    @apply text-[#00ff88] font-bold;
+  }
+  .trend-down {
+    @apply text-[#ff3b3b] font-bold;
+  }
+
+  /* Uppercase label (StyleSeed Rule #3) */
+  .label-uppercase {
+    @apply text-[12px] font-medium uppercase tracking-[0.05em];
+    color: var(--text-secondary);
+  }
+
+  /* Status dot (StyleSeed Rule #9) */
+  .status-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    display: inline-block;
+    flex-shrink: 0;
+  }
+}
+
+/* nav rail tooltip */
+.tip {
+  @apply pointer-events-none absolute left-full ml-2 whitespace-nowrap rounded-md bg-ink-700 px-2 py-1 text-xs text-slate-100 opacity-0 shadow-lg ring-1 ring-white/10 transition-opacity;
+}
+.has-tip:hover .tip {
+  @apply opacity-100;
+}
+
+/* Neon glow effect for interactive elements */
+.neon-glow {
+  position: relative;
+}
+.neon-glow::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  opacity: 0;
+  transition: opacity var(--duration-normal) var(--ease-default);
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.15), 0 0 24px rgba(0, 229, 255, 0.08);
+  pointer-events: none;
+}
+.neon-glow:hover::after {
+  opacity: 1;
+}
+
+/* Grid overlay for terminal feel */
+.grid-overlay {
+  background-image:
+    linear-gradient(rgba(0, 229, 255, 0.015) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 255, 0.015) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Electron custom titlebar */
+.titlebar {
+  -webkit-app-region: drag;
+  height: 32px;
+  background: var(--surface-page);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  position: relative;
+  z-index: 50;
+}
+.titlebar button, .titlebar input, .titlebar a {
+  -webkit-app-region: no-drag;
+}
+
+/* Motion: fade-in entrance (used by IntersectionObserver + LandingPage) */
+@keyframes styleseed-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes styleseed-slide-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes styleseed-pop-in {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Data-animate scroll-triggered entrance */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 0.6s cubic-bezier(0.25, 0.1, 0.25, 1),
+              transform 0.6s cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+[data-animate].animate-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Safe area for mobile notch/home indicator */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+/* Mobile touch: always show interactive elements */
+@media (hover: none) and (pointer: coarse) {
+  .touch-only-visible {
+    opacity: 1 !important;
+  }
+}

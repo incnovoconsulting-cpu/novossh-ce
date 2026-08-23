@@ -1,0 +1,169 @@
+:root {
+  --status-online: #10b981;
+  --status-offline: #ef4444;
+  --status-badge-bg: #fbbf24;
+  --status-badge-text: #000000;
+  --tooltip-bg: var(--ink-700, #1e293b);
+  --tooltip-text: var(--slate-100, #f1f5f9);
+  --tooltip-border: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 6px;
+}
+
+.container:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+}
+
+.icon {
+  font-size: 14px;
+  line-height: 1;
+  display: inline-block;
+  animation: pulse-status 2s ease-in-out infinite;
+}
+
+.icon.online {
+  color: var(--status-online);
+}
+
+.icon.offline {
+  color: var(--status-offline);
+  animation: pulse-offline 1s ease-in-out infinite;
+}
+
+@keyframes pulse-status {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse-offline {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  font-size: 12px;
+  font-weight: 600;
+  background-color: var(--status-badge-bg);
+  color: var(--status-badge-text);
+  border-radius: 10px;
+  animation: badge-enter 0.3s ease;
+}
+
+@keyframes badge-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.tooltip {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 8px;
+  z-index: 50;
+  pointer-events: none;
+  animation: tooltip-enter 0.2s ease;
+}
+
+@keyframes tooltip-enter {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.tooltipContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px 12px;
+  background-color: var(--tooltip-bg);
+  color: var(--tooltip-text);
+  border: 1px solid var(--tooltip-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+.tooltipStatus {
+  font-weight: 500;
+  letter-spacing: 0.3px;
+}
+
+.tooltipDivider {
+  height: 1px;
+  background-color: var(--tooltip-border);
+  margin: 2px 0;
+}
+
+.tooltipUnsaved {
+  font-size: 12px;
+  color: var(--status-badge-bg);
+}
+
+.tooltipSync {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+  font-style: italic;
+  margin-top: 2px;
+}
+
+/* Responsive: full width on mobile, compact on desktop */
+@media (max-width: 768px) {
+  .container {
+    width: 100%;
+    padding: 8px 12px;
+    justify-content: flex-start;
+  }
+
+  .tooltip {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .tooltipContent {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: novossh-config
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/component: config
+data:
+  NODE_ENV: "production"
+  PORT: "8787"
+  HOST: "0.0.0.0"
+  LOG_LEVEL: "info"
+  CORS_ORIGIN: "https://novossh.example.com"

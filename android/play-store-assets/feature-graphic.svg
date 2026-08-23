@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="500" viewBox="0 0 1024 500">
+  <rect width="1024" height="500" fill="#050a05"/>
+
+  <!-- subtle grid -->
+  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#22c55e" stroke-width="0.4" opacity="0.08"/>
+  </pattern>
+  <rect width="1024" height="500" fill="url(#grid)"/>
+
+  <!-- terminal window -->
+  <rect x="48" y="72" width="560" height="356" rx="12" fill="#0a0f0a" stroke="#22c55e" stroke-width="1" opacity="0.9"/>
+  <rect x="48" y="72" width="560" height="36" rx="12" fill="#0f1f0f"/>
+  <rect x="48" y="96" width="560" height="12" fill="#0f1f0f"/>
+  <circle cx="76" cy="90" r="6" fill="#ff5f56"/>
+  <circle cx="100" cy="90" r="6" fill="#ffbd2e"/>
+  <circle cx="124" cy="90" r="6" fill="#22c55e"/>
+
+  <!-- terminal text -->
+  <text x="68" y="138" font-family="monospace" font-size="14" fill="#4ade80">user@prod-web-01</text>
+  <text x="236" y="138" font-family="monospace" font-size="14" fill="#6b7280">:~$ </text>
+  <text x="272" y="138" font-family="monospace" font-size="14" fill="#d1fae5">docker ps</text>
+
+  <text x="68" y="166" font-family="monospace" font-size="13" fill="#6b7280">NAMES          STATUS       PORTS</text>
+  <text x="68" y="190" font-family="monospace" font-size="13" fill="#22c55e">nginx          Up 3 days    80/tcp</text>
+  <text x="68" y="214" font-family="monospace" font-size="13" fill="#22c55e">app-server     Up 3 days    3000/tcp</text>
+  <text x="68" y="238" font-family="monospace" font-size="13" fill="#22c55e">redis          Up 3 days    6379/tcp</text>
+  <text x="68" y="262" font-family="monospace" font-size="13" fill="#22c55e">postgres       Up 3 days    5432/tcp</text>
+
+  <text x="68" y="296" font-family="monospace" font-size="14" fill="#4ade80">user@prod-web-01</text>
+  <text x="236" y="296" font-family="monospace" font-size="14" fill="#6b7280">:~$ </text>
+  <rect x="272" y="280" width="10" height="18" fill="#22c55e" opacity="0.9"/>
+
+  <!-- logo mark -->
+  <svg x="672" y="120" width="64" height="64" viewBox="0 0 1024 1024">
+    <rect width="1024" height="1024" rx="200" fill="#050a05"/>
+    <path d="M240 320 L520 512 L240 704" fill="none" stroke="#22c55e" stroke-width="88" stroke-linecap="round" stroke-linejoin="round"/>
+    <rect x="560" y="600" width="224" height="104" rx="16" fill="#16a34a"/>
+  </svg>
+
+  <!-- wordmark -->
+  <text x="672" y="224" font-family="monospace" font-size="48" font-weight="700" fill="#ffffff">NovoSSH</text>
+  <text x="672" y="260" font-family="monospace" font-size="16" fill="#4ade80">Modern SSH terminal client</text>
+
+  <!-- badges -->
+  <rect x="672" y="292" width="112" height="28" rx="14" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="728" y="311" text-anchor="middle" font-family="monospace" font-size="11" fill="#22c55e">SSH Terminal</text>
+
+  <rect x="796" y="292" width="80" height="28" rx="14" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="836" y="311" text-anchor="middle" font-family="monospace" font-size="11" fill="#22c55e">SFTP</text>
+
+  <rect x="672" y="332" width="96" height="28" rx="14" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="720" y="351" text-anchor="middle" font-family="monospace" font-size="11" fill="#22c55e">SSH Keys</text>
+
+  <rect x="780" y="332" width="120" height="28" rx="14" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="840" y="351" text-anchor="middle" font-family="monospace" font-size="11" fill="#22c55e">Port Forward</text>
+</svg>

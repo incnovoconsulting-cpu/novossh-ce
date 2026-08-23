@@ -1,0 +1,80 @@
+:root {
+  --badge-bg: #fbbf24;
+  --badge-text: #000000;
+  --badge-spinner: #d97706;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  animation: badge-fade-in 0.3s ease;
+}
+
+@keyframes badge-fade-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.badge:not(:disabled):hover {
+  background-color: #f59e0b;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.badge:not(:disabled):active {
+  transform: translateY(0);
+}
+
+.badge:disabled {
+  cursor: not-allowed;
+  opacity: 0.8;
+}
+
+.spinner {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-top-color: var(--badge-spinner);
+  border-radius: 50%;
+  animation: spinner-spin 0.8s linear infinite;
+}
+
+@keyframes spinner-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.text {
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* Fade out animation when no longer pending */
+@keyframes badge-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+}

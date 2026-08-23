@@ -1,0 +1,219 @@
+:root {
+  --scrubber-bg: rgba(255, 255, 255, 0.08);
+  --scrubber-progress: #3b82f6;
+  --scrubber-thumb: #3b82f6;
+  --scrubber-hover: #60a5fa;
+  --scrubber-text: var(--slate-100, #f1f5f9);
+  --scrubber-border: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.track {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background-color: var(--scrubber-bg);
+  border: 1px solid var(--scrubber-border);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  overflow: visible;
+}
+
+.track:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.track.dragging {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Progress bar */
+.progress {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: linear-gradient(90deg, var(--scrubber-progress), var(--scrubber-hover));
+  border-radius: 12px 0 0 12px;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* Hover indicator line */
+.hoverIndicator {
+  position: absolute;
+  top: 0;
+  width: 2px;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.4);
+  border-radius: 1px;
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+/* Scrubber thumb */
+.thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 18px;
+  height: 18px;
+  background-color: var(--scrubber-thumb);
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+  cursor: grab;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.thumb:hover {
+  transform: translate(-50%, -50%) scale(1.1);
+  box-shadow: 0 2px 12px rgba(59, 130, 246, 0.6);
+}
+
+.thumb.active {
+  cursor: grabbing;
+  transform: translate(-50%, -50%) scale(1.15);
+  box-shadow: 0 4px 16px rgba(59, 130, 246, 0.8);
+}
+
+.thumb:focus-visible {
+  outline: 2px solid var(--scrubber-hover);
+  outline-offset: 2px;
+}
+
+/* Frame preview tooltip */
+.previewTooltip {
+  position: absolute;
+  top: -28px;
+  transform: translateX(-50%);
+  background-color: rgba(0, 0, 0, 0.8);
+  color: var(--scrubber-text);
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 20;
+  animation: tooltip-pop-in 0.15s ease;
+}
+
+.previewTooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(0, 0, 0, 0.8);
+}
+
+@keyframes tooltip-pop-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+.previewFrame {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 0.3px;
+}
+
+/* Frame label */
+.frameLabel {
+  display: flex;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.frameLabelText {
+  letter-spacing: 0.3px;
+}
+
+.frameLabelNumber {
+  color: var(--scrubber-thumb);
+  font-weight: 600;
+  margin: 0 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    gap: 6px;
+  }
+
+  .track {
+    height: 20px;
+    border-radius: 10px;
+  }
+
+  .progress {
+    border-radius: 10px 0 0 10px;
+  }
+
+  .thumb {
+    width: 16px;
+    height: 16px;
+  }
+
+  .previewTooltip {
+    top: -24px;
+    padding: 3px 6px;
+    font-size: 10px;
+  }
+
+  .frameLabel {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .track {
+    height: 18px;
+    border-radius: 9px;
+  }
+
+  .progress {
+    border-radius: 9px 0 0 9px;
+  }
+
+  .thumb {
+    width: 14px;
+    height: 14px;
+    border-width: 1px;
+  }
+
+  .thumb:hover,
+  .thumb.active {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .previewTooltip {
+    top: -20px;
+    padding: 2px 4px;
+    font-size: 9px;
+  }
+
+  .frameLabel {
+    font-size: 10px;
+  }
+}

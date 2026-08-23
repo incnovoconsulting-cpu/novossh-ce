@@ -1,0 +1,53 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "NovoSSH",
+  "version": "1.0.0",
+  "identifier": "app.novossh.desktop",
+  "build": {
+    "frontendDist": "../../dist",
+    "devUrl": "http://localhost:5173",
+    "beforeDevCommand": "cd ../.. && npm run dev",
+    "beforeBuildCommand": "echo skip"
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "NovoSSH",
+        "width": 1200,
+        "height": 800,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "decorations": false,
+        "transparent": false,
+        "center": true
+      }
+    ],
+    "security": {
+      "csp": null
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["msi", "nsis", "deb", "appimage"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.ico"
+    ],
+    "windows": {
+      "nsis": {
+        "displayLanguageSelector": true
+      }
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEE1RTQ4N0YyQzI4QjlFODkKUldTSm5vdkM4b2ZrcGJsN09lQVp5Y0FDR2NjU0ZmSUQ1VGtTRWppNXNBTzRoL2svOTJEMjJOQzAK",
+      "endpoints": [
+        "https://github.com/incnovoconsulting-cpu/NovoSSH/releases/latest/download/latest.json"
+      ]
+    }
+  }
+}

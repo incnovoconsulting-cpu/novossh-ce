@@ -1,0 +1,14 @@
+.notification-center { display: flex; flex-direction: column; height: 100%; background: var(--bg-primary); }
+.header { padding: 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.header .title { margin: 0; font-size: 24px; font-weight: 600; }
+.count { font-size: 13px; color: var(--text-secondary); }
+.notification-list { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+.notification-item { padding: 16px 20px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; }
+.notification-item:hover { background: var(--bg-secondary); }
+.content { flex: 1; }
+.content .title { margin: 0 0 4px 0; font-size: 14px; font-weight: 600; }
+.message { margin: 0; font-size: 13px; color: var(--text-secondary); }
+.actions { display: flex; gap: 8px; }
+.actions button { padding: 4px 8px; font-size: 12px; border: 1px solid var(--border-color); background: transparent; cursor: pointer; border-radius: 4px; }
+.empty-state { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); }
+.loading { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); }

@@ -1,0 +1,4 @@
+.security-alert { display: flex; gap: 12px; padding: 16px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 8px; color: #ef4444; }
+.security-alert svg { width: 24px; height: 24px; flex-shrink: 0; }
+.security-alert h4 { margin: 0 0 4px 0; font-size: 14px; }
+.security-alert p { margin: 0; font-size: 13px; }
