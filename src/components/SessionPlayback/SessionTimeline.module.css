@@ -1,0 +1,268 @@
+:root {
+  --timeline-bg: var(--ink-800, #0f172a);
+  --timeline-track: rgba(255, 255, 255, 0.1);
+  --timeline-text: var(--slate-200, #e2e8f0);
+  --timeline-progress: #3b82f6;
+  --timeline-hover-bg: rgba(255, 255, 255, 0.05);
+  --marker-command: #3b82f6;
+  --marker-output: #64748b;
+  --marker-sync: #22c55e;
+}
+
+.timelineContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background-color: var(--timeline-bg);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+}
+
+.timelineHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+}
+
+.timeStart,
+.timeEnd {
+  min-width: 40px;
+}
+
+.timeline {
+  position: relative;
+  height: 32px;
+  background-color: var(--timeline-hover-bg);
+  border: 1px solid var(--timeline-track);
+  border-radius: 6px;
+  overflow: visible;
+  transition: all 0.2s ease;
+}
+
+.timeline.interactive {
+  cursor: pointer;
+}
+
+.timeline.interactive:hover {
+  background-color: rgba(59, 130, 246, 0.1);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.timelineTrack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progressBackground {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background-color: var(--timeline-progress);
+  opacity: 0.15;
+  border-radius: 5px;
+  transition: width 0.1s linear;
+}
+
+.frameMarker {
+  position: absolute;
+  top: 50%;
+  width: 2px;
+  height: 16px;
+  transform: translateX(-50%) translateY(-50%);
+  border-radius: 1px;
+  opacity: 0.7;
+  transition: all 0.2s ease;
+}
+
+.frameMarker:hover {
+  opacity: 1;
+  height: 24px;
+  z-index: 5;
+}
+
+.frameMarker.command {
+  background-color: var(--marker-command);
+}
+
+.frameMarker.output {
+  background-color: var(--marker-output);
+}
+
+.frameMarker.sync {
+  background-color: var(--marker-sync);
+  height: 20px;
+  animation: pulse-marker 2s ease-in-out infinite;
+}
+
+@keyframes pulse-marker {
+  0%, 100% {
+    opacity: 0.7;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.progressThumb {
+  position: absolute;
+  top: 50%;
+  width: 14px;
+  height: 14px;
+  margin-left: -7px;
+  margin-top: -7px;
+  background-color: var(--timeline-progress);
+  border: 2px solid white;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.1s linear;
+  z-index: 10;
+}
+
+.timeline.interactive:hover .progressThumb {
+  width: 18px;
+  height: 18px;
+  margin-left: -9px;
+  margin-top: -9px;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);
+}
+
+.timelineStats {
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.7);
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.statItem {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.statLabel {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.statValue {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 600;
+  color: var(--timeline-text);
+  letter-spacing: 0.5px;
+}
+
+.legend {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.legendItem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legendDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legendDot.command {
+  background-color: var(--marker-command);
+}
+
+.legendDot.output {
+  background-color: var(--marker-output);
+}
+
+.legendDot.sync {
+  background-color: var(--marker-sync);
+}
+
+/* Keyboard focus */
+.timeline:focus {
+  outline: 2px solid var(--timeline-progress);
+  outline-offset: 2px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .timelineContainer {
+    gap: 10px;
+    padding: 12px;
+  }
+
+  .timeline {
+    height: 28px;
+  }
+
+  .frameMarker {
+    height: 14px;
+  }
+
+  .frameMarker:hover {
+    height: 20px;
+  }
+
+  .progressThumb {
+    width: 12px;
+    height: 12px;
+    margin-left: -6px;
+    margin-top: -6px;
+  }
+
+  .timeline.interactive:hover .progressThumb {
+    width: 16px;
+    height: 16px;
+    margin-left: -8px;
+    margin-top: -8px;
+  }
+
+  .timelineStats {
+    gap: 16px;
+    font-size: 12px;
+  }
+
+  .legend {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+}
+
+@media (max-width: 480px) {
+  .timelineContainer {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .timelineHeader {
+    font-size: 11px;
+  }
+
+  .timelineStats {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .legend {
+    font-size: 11px;
+  }
+}

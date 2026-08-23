@@ -1,0 +1,235 @@
+/* Peer List Styles */
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary, #ffffff);
+  padding: 0 4px;
+  margin-bottom: 4px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  border: 1px solid var(--border-list, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.peerItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  background-color: var(--bg-item, rgba(255, 255, 255, 0.03));
+  border-bottom: 1px solid var(--border-item, rgba(255, 255, 255, 0.05));
+  transition: all 0.2s ease;
+}
+
+.peerItem:last-child {
+  border-bottom: none;
+}
+
+.peerItem:hover {
+  background-color: var(--bg-item-hover, rgba(255, 255, 255, 0.08));
+}
+
+.peerInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+
+.statusIndicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.statusIndicator.connected {
+  color: var(--status-connected, #10b981);
+}
+
+.statusIndicator.disconnected {
+  color: var(--status-disconnected, #6b7280);
+}
+
+.statusIndicator.connecting {
+  color: var(--status-connecting, #f59e0b);
+  animation: pulse-connecting 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse-connecting {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.peerDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  flex: 1;
+}
+
+.peerName {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary, #ffffff);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.peerMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--text-secondary, #d1d5db);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 2px 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-secondary, #d1d5db);
+  flex-shrink: 0;
+}
+
+.statusBadge.connected {
+  background-color: rgba(16, 185, 129, 0.1);
+  color: var(--status-connected, #10b981);
+}
+
+.statusBadge.disconnected {
+  background-color: rgba(107, 114, 128, 0.1);
+  color: var(--status-disconnected, #6b7280);
+}
+
+.statusBadge.connecting {
+  background-color: rgba(245, 158, 11, 0.1);
+  color: var(--status-connecting, #f59e0b);
+}
+
+.syncButton {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  background-color: var(--btn-sync-bg, rgba(59, 130, 246, 0.1));
+  border: 1px solid var(--btn-sync-border, rgba(59, 130, 246, 0.3));
+  color: var(--btn-sync-text, #60a5fa);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.syncButton:hover {
+  background-color: var(--btn-sync-bg-hover, rgba(59, 130, 246, 0.2));
+  border-color: var(--btn-sync-border-hover, rgba(59, 130, 246, 0.5));
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.2);
+}
+
+.syncButton:active {
+  transform: translateY(1px);
+}
+
+.syncButton:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+  background-color: var(--bg-empty, rgba(255, 255, 255, 0.03));
+  border: 1px dashed var(--border-empty, rgba(255, 255, 255, 0.1));
+  border-radius: 8px;
+  color: var(--text-secondary, #d1d5db);
+  text-align: center;
+}
+
+.emptyIcon {
+  font-size: 32px;
+  margin-bottom: 8px;
+  opacity: 0.5;
+}
+
+.emptyMessage {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .container {
+    gap: 6px;
+  }
+
+  .peerItem {
+    padding: 10px 12px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .peerInfo {
+    width: 100%;
+  }
+
+  .syncButton {
+    width: 100%;
+    justify-content: center;
+    padding: 8px;
+  }
+
+  .peerName {
+    font-size: 12px;
+  }
+
+  .peerMeta {
+    font-size: 10px;
+  }
+
+  .emptyState {
+    padding: 24px 12px;
+  }
+
+  .emptyMessage {
+    font-size: 12px;
+  }
+}

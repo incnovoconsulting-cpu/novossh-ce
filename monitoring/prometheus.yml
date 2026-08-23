@@ -1,0 +1,33 @@
+# Prometheus configuration for NovoSSH
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+rule_files:
+  - "alerts.yml"
+
+scrape_configs:
+  - job_name: "novossh"
+    metrics_path: "/metrics"
+    static_configs:
+      - targets: ["novossh:8787"]
+        labels:
+          service: "novossh"
+          environment: "${ENVIRONMENT:-production}"
+
+  - job_name: "node-exporter"
+    static_configs:
+      - targets: ["node-exporter:9100"]
+        labels:
+          service: "node-exporter"
+
+  - job_name: "postgres-exporter"
+    static_configs:
+      - targets: ["postgres-exporter:9187"]
+        labels:
+          service: "postgres-exporter"
+
+  - job_name: "prometheus"
+    static_configs:
+      - targets: ["localhost:9090"]

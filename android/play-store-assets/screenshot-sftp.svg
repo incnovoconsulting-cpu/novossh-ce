@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#050a05"/>
+
+  <!-- status bar -->
+  <rect width="1080" height="80" fill="#0a0f0a"/>
+  <text x="540" y="55" text-anchor="middle" font-family="monospace" font-size="28" fill="#ffffff">9:41</text>
+
+  <!-- header -->
+  <rect y="80" width="1080" height="120" fill="#0a0f0a"/>
+  <text x="60" y="122" font-family="monospace" font-size="28" fill="#22c55e">←</text>
+  <text x="108" y="157" font-family="monospace" font-size="32" font-weight="600" fill="#ffffff">SFTP Browser</text>
+  <text x="108" y="192" font-family="monospace" font-size="18" fill="#6b7280">/var/www/html</text>
+
+  <!-- file rows -->
+  <rect x="40" y="240" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="291" font-family="monospace" font-size="26" fill="#f59e0b">▶</text>
+  <text x="124" y="291" font-family="monospace" font-size="22" fill="#ffffff">public/</text>
+  <text x="960" y="291" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">4.2 MB</text>
+
+  <rect x="40" y="338" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="389" font-family="monospace" font-size="26" fill="#f59e0b">▶</text>
+  <text x="124" y="389" font-family="monospace" font-size="22" fill="#ffffff">src/</text>
+  <text x="960" y="389" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">12.8 MB</text>
+
+  <rect x="40" y="436" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="487" font-family="monospace" font-size="26" fill="#f59e0b">▶</text>
+  <text x="124" y="487" font-family="monospace" font-size="22" fill="#ffffff">config/</text>
+  <text x="960" y="487" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">64 KB</text>
+
+  <rect x="40" y="534" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="585" font-family="monospace" font-size="26" fill="#4ade80">#</text>
+  <text x="124" y="585" font-family="monospace" font-size="22" fill="#ffffff">index.html</text>
+  <text x="960" y="585" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">2.4 KB</text>
+
+  <rect x="40" y="632" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="683" font-family="monospace" font-size="26" fill="#4ade80">#</text>
+  <text x="124" y="683" font-family="monospace" font-size="22" fill="#ffffff">nginx.conf</text>
+  <text x="960" y="683" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">1.8 KB</text>
+
+  <rect x="40" y="730" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="781" font-family="monospace" font-size="26" fill="#4ade80">#</text>
+  <text x="124" y="781" font-family="monospace" font-size="22" fill="#ffffff">docker-compose.yml</text>
+  <text x="960" y="781" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">3.2 KB</text>
+
+  <rect x="40" y="828" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#16a34a" stroke-width="1"/>
+  <text x="80" y="879" font-family="monospace" font-size="26" fill="#22c55e">$</text>
+  <text x="124" y="879" font-family="monospace" font-size="22" fill="#22c55e">.env</text>
+  <text x="960" y="879" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">512 B</text>
+
+  <rect x="40" y="926" width="1000" height="88" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="977" font-family="monospace" font-size="26" fill="#4ade80">#</text>
+  <text x="124" y="977" font-family="monospace" font-size="22" fill="#ffffff">README.md</text>
+  <text x="960" y="977" text-anchor="end" font-family="monospace" font-size="16" fill="#374151">1.2 KB</text>
+
+  <!-- action bar -->
+  <rect y="1800" width="1080" height="120" fill="#0a0f0a"/>
+  <rect x="200" y="1820" width="80" height="60" rx="10" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="240" y="1858" text-anchor="middle" font-family="monospace" font-size="24" fill="#22c55e">↑</text>
+  <rect x="500" y="1820" width="80" height="60" rx="10" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="540" y="1858" text-anchor="middle" font-family="monospace" font-size="24" fill="#22c55e">↓</text>
+  <rect x="800" y="1820" width="80" height="60" rx="10" fill="#052e16" stroke="#16a34a" stroke-width="1"/>
+  <text x="840" y="1858" text-anchor="middle" font-family="monospace" font-size="24" fill="#22c55e">⟳</text>
+</svg>

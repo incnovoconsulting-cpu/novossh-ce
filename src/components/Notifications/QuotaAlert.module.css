@@ -1,0 +1,9 @@
+.quota-alert { padding: 16px; border-radius: 8px; border-left: 4px solid; }
+.quota-alert h3 { margin: 0 0 12px 0; font-size: 14px; }
+.quota-alert.critical { background: rgba(239, 68, 68, 0.1); border-left-color: #ef4444; color: #ef4444; }
+.quota-alert.high { background: rgba(249, 115, 22, 0.1); border-left-color: #f97316; color: #f97316; }
+.quota-alert.warning { background: rgba(251, 146, 60, 0.1); border-left-color: #fb923c; color: #fb923c; }
+.quota-alert.info { background: rgba(59, 130, 246, 0.1); border-left-color: #3b82f6; color: #3b82f6; }
+.progress-bar { width: 100%; height: 8px; background: rgba(0, 0, 0, 0.1); border-radius: 4px; overflow: hidden; margin-bottom: 8px; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, #667eea 0%, #764ba2 100%); }
+.quota-alert p { margin: 0; font-size: 12px; }

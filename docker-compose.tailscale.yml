@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  novossh:
+    build:
+      context: .
+      dockerfile: Dockerfile.tailscale
+    container_name: novossh-server
+    ports:
+      - "8787:8787"
+    environment:
+      # OAuth Configuration (required for OAuth flow)
+      TAILSCALE_CLIENT_ID: ${TAILSCALE_CLIENT_ID:-}
+      TAILSCALE_CLIENT_SECRET: ${TAILSCALE_CLIENT_SECRET:-}
+
+      # Server Configuration
+      HOST: "0.0.0.0"
+      PORT: "8787"
+      TAILSCALE_IP_ADDRESS: ${TAILSCALE_IP_ADDRESS:-}
+      NODE_ENV: ${NODE_ENV:-production}
+
+    # Mount Tailscale socket for network integration (if Tailscale installed on host)
+    volumes:
+      # Optional: if running Tailscale on host
+      # - /var/run/tailscale/tailscaled.sock:/var/run/tailscale/tailscaled.sock
+
+    networks:
+      - novossh
+
+    # Health check
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8787/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+    # Resource limits (adjust as needed)
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+
+    restart: unless-stopped
+
+networks:
+  novossh:
+    driver: bridge

@@ -1,0 +1,35 @@
+NovoSSH Terminal is a native SSH terminal client for Android. Connect to remote servers directly from your phone with the speed and security of SSH.
+
+FEATURES:
+✓ SSH Terminal - Full xterm-256color terminal with keyboard support
+✓ Host Management - Save, organize, and quickly connect to SSH servers
+✓ SSH Key Support - Import RSA and Ed25519 keys securely
+✓ Command Snippets - Quick access to frequently used commands
+✓ Port Forwarding - Local and remote port forwarding setup
+✓ SFTP File Browser - Upload, download, and manage remote files
+✓ Connection History - Quick reconnect to frequently used hosts
+✓ Material 3 Theme - Beautiful dark theme matching web and iOS versions
+✓ Biometric Lock - Optional fingerprint/face unlock (Android 9+)
+✓ Encrypted Storage - All credentials encrypted with AES-256
+
+SECURITY:
+• All data stored locally on your device (no cloud sync)
+• SSH credentials encrypted with military-grade AES-256
+• Private keys secured by Android Keystore system
+• Secure SSH library (JSch)
+• No tracking, analytics, or user profiling
+• No unnecessary permissions
+
+REQUIREMENTS:
+• Android 8.0 (API 26) or higher
+• SSH access to remote servers
+• SSH key in PEM format (RSA or Ed25519)
+
+PRIVACY:
+NovoSSH Terminal respects your privacy. We don't collect, store, or transmit your SSH credentials. All data is encrypted locally on your device.
+
+See our privacy policy at: https://novossh.com/privacy
+
+SUPPORT:
+For questions or issues: support@novoconsultinginc.org
+Website: https://novossh.com

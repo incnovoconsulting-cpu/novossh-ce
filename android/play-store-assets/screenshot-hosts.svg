@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#050a05"/>
+
+  <!-- status bar -->
+  <rect width="1080" height="80" fill="#0a0f0a"/>
+  <text x="540" y="55" text-anchor="middle" font-family="monospace" font-size="28" fill="#ffffff">9:41</text>
+
+  <!-- header -->
+  <rect y="80" width="1080" height="120" fill="#0a0f0a"/>
+  <text x="60" y="157" font-family="monospace" font-size="40" font-weight="700" fill="#ffffff">Hosts</text>
+  <rect x="980" y="108" width="60" height="60" rx="12" fill="#052e16" stroke="#22c55e" stroke-width="1"/>
+  <text x="1010" y="148" text-anchor="middle" font-family="monospace" font-size="32" fill="#22c55e">+</text>
+
+  <!-- search -->
+  <rect x="40" y="220" width="1000" height="60" rx="10" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <text x="80" y="258" font-family="monospace" font-size="22" fill="#374151">search hosts...</text>
+
+  <!-- host 1 — green/connected -->
+  <rect x="40" y="320" width="1000" height="140" rx="12" fill="#0a0f0a" stroke="#16a34a" stroke-width="1"/>
+  <circle cx="96" cy="390" r="20" fill="#052e16"/>
+  <circle cx="96" cy="390" r="8" fill="#22c55e"/>
+  <text x="136" y="372" font-family="monospace" font-size="26" font-weight="600" fill="#ffffff">Production Web Server</text>
+  <text x="136" y="408" font-family="monospace" font-size="18" fill="#6b7280">192.168.1.100:22</text>
+  <text x="136" y="440" font-family="monospace" font-size="16" fill="#22c55e">prod · web</text>
+
+  <!-- host 2 — amber/idle -->
+  <rect x="40" y="480" width="1000" height="140" rx="12" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <circle cx="96" cy="550" r="20" fill="#1c1200"/>
+  <circle cx="96" cy="550" r="8" fill="#f59e0b"/>
+  <text x="136" y="532" font-family="monospace" font-size="26" font-weight="600" fill="#ffffff">Staging API Server</text>
+  <text x="136" y="568" font-family="monospace" font-size="18" fill="#6b7280">192.168.1.101:22</text>
+  <text x="136" y="600" font-family="monospace" font-size="16" fill="#f59e0b">staging · api</text>
+
+  <!-- host 3 -->
+  <rect x="40" y="640" width="1000" height="140" rx="12" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <circle cx="96" cy="710" r="20" fill="#052e16"/>
+  <circle cx="96" cy="710" r="8" fill="#4ade80"/>
+  <text x="136" y="692" font-family="monospace" font-size="26" font-weight="600" fill="#ffffff">Dev PostgreSQL</text>
+  <text x="136" y="728" font-family="monospace" font-size="18" fill="#6b7280">192.168.1.102:5432</text>
+  <text x="136" y="760" font-family="monospace" font-size="16" fill="#4ade80">dev · db</text>
+
+  <!-- host 4 -->
+  <rect x="40" y="800" width="1000" height="140" rx="12" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <circle cx="96" cy="870" r="20" fill="#1a0000"/>
+  <circle cx="96" cy="870" r="8" fill="#ef4444"/>
+  <text x="136" y="852" font-family="monospace" font-size="26" font-weight="600" fill="#ffffff">CI/CD Runner</text>
+  <text x="136" y="888" font-family="monospace" font-size="18" fill="#6b7280">192.168.1.103:22</text>
+  <text x="136" y="920" font-family="monospace" font-size="16" fill="#ef4444">ci · ops</text>
+
+  <!-- host 5 -->
+  <rect x="40" y="960" width="1000" height="140" rx="12" fill="#0a0f0a" stroke="#1a3a1a" stroke-width="1"/>
+  <circle cx="96" cy="1030" r="20" fill="#052e16"/>
+  <circle cx="96" cy="1030" r="8" fill="#22c55e"/>
+  <text x="136" y="1012" font-family="monospace" font-size="26" font-weight="600" fill="#ffffff">NAS Backup</text>
+  <text x="136" y="1048" font-family="monospace" font-size="18" fill="#6b7280">192.168.1.104:2222</text>
+  <text x="136" y="1080" font-family="monospace" font-size="16" fill="#22c55e">backup</text>
+
+  <!-- bottom nav -->
+  <rect y="1820" width="1080" height="100" fill="#0a0f0a"/>
+  <text x="135" y="1877" text-anchor="middle" font-family="monospace" font-size="18" fill="#22c55e">Hosts</text>
+  <text x="405" y="1877" text-anchor="middle" font-family="monospace" font-size="18" fill="#374151">Keys</text>
+  <text x="675" y="1877" text-anchor="middle" font-family="monospace" font-size="18" fill="#374151">Snippets</text>
+  <text x="945" y="1877" text-anchor="middle" font-family="monospace" font-size="18" fill="#374151">Settings</text>
+</svg>

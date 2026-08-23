@@ -1,0 +1,88 @@
+:root {
+  --progress-text: var(--slate-100, #f1f5f9);
+  --progress-bg: rgba(255, 255, 255, 0.08);
+  --progress-fill: #3b82f6;
+  --progress-border: rgba(255, 255, 255, 0.1);
+}
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.time {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--progress-text);
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 0.3px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.progressBar {
+  flex: 1;
+  height: 4px;
+  background-color: var(--progress-bg);
+  border-radius: 2px;
+  overflow: hidden;
+  border: 1px solid var(--progress-border);
+}
+
+.progressFill {
+  height: 100%;
+  background-color: var(--progress-fill);
+  border-radius: 2px;
+  transition: width 0.1s linear;
+}
+
+.progressFill.animating {
+  background: linear-gradient(
+    90deg,
+    var(--progress-fill),
+    #60a5fa,
+    var(--progress-fill)
+  );
+  background-size: 200% 100%;
+  animation: progress-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  50% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .container {
+    gap: 6px;
+  }
+
+  .time {
+    font-size: 11px;
+    min-width: 36px;
+  }
+
+  .progressBar {
+    height: 3px;
+  }
+}
+
+@media (max-width: 480px) {
+  .time {
+    font-size: 10px;
+    min-width: 32px;
+  }
+
+  .progressBar {
+    height: 2px;
+  }
+}

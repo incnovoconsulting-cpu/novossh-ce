@@ -1,0 +1,20 @@
+# Gradle
+.gradle/
+build/
+*.apk
+*.aab
+*.keystore
+
+# Android Studio
+.idea/
+*.iml
+*.iws
+*.ipr
+local.properties
+
+# Kotlin
+*.kotlin_builtins
+
+# Secrets
+keystores.properties
+service-account.json

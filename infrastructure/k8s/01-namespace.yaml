@@ -1,0 +1,12 @@
+---
+# Kubernetes Namespace for NovoSSH Production
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/instance: production
+    managed-by: terraform
+  annotations:
+    description: "NovoSSH production environment namespace"

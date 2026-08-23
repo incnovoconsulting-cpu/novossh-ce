@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="1920" viewBox="0 0 1080 1920">
+  <rect width="1080" height="1920" fill="#050a05"/>
+
+  <!-- status bar -->
+  <rect width="1080" height="80" fill="#0a0f0a"/>
+  <text x="540" y="55" text-anchor="middle" font-family="monospace" font-size="28" fill="#ffffff">9:41</text>
+
+  <!-- tab bar -->
+  <rect y="80" width="1080" height="100" fill="#0a0f0a"/>
+  <rect x="40" y="100" width="220" height="60" rx="8" fill="#0f1f0f" stroke="#22c55e" stroke-width="1"/>
+  <text x="150" y="138" text-anchor="middle" font-family="monospace" font-size="20" fill="#22c55e">prod-web-01</text>
+  <text x="900" y="140" font-family="monospace" font-size="28" fill="#6b7280">⋮</text>
+
+  <!-- terminal body -->
+  <rect x="0" y="200" width="1080" height="1600" fill="#030803"/>
+
+  <text x="40" y="260" font-family="monospace" font-size="20" fill="#6b7280">Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 5.15.0)</text>
+  <text x="40" y="295" font-family="monospace" font-size="20" fill="#374151">Last login: Mon Jun 10 11:12:43 2026 from 10.0.0.3</text>
+
+  <text x="40" y="350" font-family="monospace" font-size="22" fill="#4ade80">user@prod-web-01</text>
+  <text x="352" y="350" font-family="monospace" font-size="22" fill="#6b7280">:~$ </text>
+  <text x="400" y="350" font-family="monospace" font-size="22" fill="#d1fae5">docker ps</text>
+
+  <text x="40" y="395" font-family="monospace" font-size="20" fill="#6b7280">CONTAINER ID   IMAGE          STATUS       NAMES</text>
+  <text x="40" y="430" font-family="monospace" font-size="20" fill="#d1fae5">a1b2c3d4e5f6   nginx:latest   Up 3 days    nginx</text>
+  <text x="40" y="465" font-family="monospace" font-size="20" fill="#d1fae5">b2c3d4e5f6g7   app:prod       Up 3 days    app-server</text>
+  <text x="40" y="500" font-family="monospace" font-size="20" fill="#d1fae5">c3d4e5f6g7h8   redis:7        Up 3 days    redis</text>
+  <text x="40" y="535" font-family="monospace" font-size="20" fill="#d1fae5">d4e5f6g7h8i9   postgres:15    Up 3 days    postgres</text>
+
+  <text x="40" y="590" font-family="monospace" font-size="22" fill="#4ade80">user@prod-web-01</text>
+  <text x="352" y="590" font-family="monospace" font-size="22" fill="#6b7280">:~$ </text>
+  <text x="400" y="590" font-family="monospace" font-size="22" fill="#d1fae5">htop</text>
+
+  <text x="40" y="645" font-family="monospace" font-size="20" fill="#fbbf24">  CPU[|||||||||||||||||||||||||||||||||||||||||||85.2%]</text>
+  <text x="40" y="680" font-family="monospace" font-size="20" fill="#22c55e">  MEM[||||||||||||||||||||||||||||||||||||        68.4%]</text>
+  <text x="40" y="715" font-family="monospace" font-size="20" fill="#d1fae5">  Tasks: 142, 345 thr; 2 running</text>
+  <text x="40" y="750" font-family="monospace" font-size="20" fill="#d1fae5">  Load average: 2.45 2.12 1.98</text>
+
+  <text x="40" y="810" font-family="monospace" font-size="22" fill="#4ade80">user@prod-web-01</text>
+  <text x="352" y="810" font-family="monospace" font-size="22" fill="#6b7280">:~$ </text>
+  <text x="400" y="810" font-family="monospace" font-size="22" fill="#d1fae5">df -h | grep -v tmpfs</text>
+
+  <text x="40" y="855" font-family="monospace" font-size="20" fill="#6b7280">Filesystem      Size  Used Avail Use% Mounted on</text>
+  <text x="40" y="890" font-family="monospace" font-size="20" fill="#d1fae5">/dev/sda1       100G   45G   55G  45% /</text>
+  <text x="40" y="925" font-family="monospace" font-size="20" fill="#d1fae5">/dev/sdb1       500G  120G  380G  24% /data</text>
+
+  <text x="40" y="985" font-family="monospace" font-size="22" fill="#4ade80">user@prod-web-01</text>
+  <text x="352" y="985" font-family="monospace" font-size="22" fill="#6b7280">:~$ </text>
+  <rect x="400" y="968" width="12" height="22" fill="#22c55e" opacity="0.9"/>
+
+  <!-- keyboard hint -->
+  <rect x="40" y="1800" width="1000" height="60" rx="30" fill="#0f1f0f" stroke="#16a34a" stroke-width="1"/>
+  <text x="540" y="1838" text-anchor="middle" font-family="monospace" font-size="22" fill="#4ade80">tap for keyboard</text>
+</svg>

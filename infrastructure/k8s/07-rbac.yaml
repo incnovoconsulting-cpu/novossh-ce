@@ -1,0 +1,267 @@
+---
+# Service Account for API Server
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: novossh-api
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/component: api
+
+---
+# Service Account for Web Frontend
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: novossh-web
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/component: web
+
+---
+# Service Account for Jobs (migrations, backups)
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: novossh-jobs
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+    app.kubernetes.io/component: jobs
+
+---
+# Role for API Server
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: novossh-api
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+rules:
+# Read ConfigMaps
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+# Read Secrets
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get"]
+# Read Service
+- apiGroups: [""]
+  resources: ["services"]
+  verbs: ["get", "list"]
+# Pods for health checks
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list"]
+# Pod logs for debugging
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get"]
+
+---
+# Role for Web Frontend
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: novossh-web
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+rules:
+# Read ConfigMaps
+- apiGroups: [""]
+  resources: ["configmaps"]
+  verbs: ["get", "list", "watch"]
+
+---
+# Role for Jobs
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: novossh-jobs
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+rules:
+# Full pod access for jobs
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get", "list", "create", "delete"]
+# Read secrets
+- apiGroups: [""]
+  resources: ["secrets", "configmaps"]
+  verbs: ["get", "list"]
+# Pod logs
+- apiGroups: [""]
+  resources: ["pods/log"]
+  verbs: ["get"]
+# Persistent volumes
+- apiGroups: [""]
+  resources: ["persistentvolumeclaims"]
+  verbs: ["get", "list"]
+
+---
+# RoleBinding for API Server
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: novossh-api
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: novossh-api
+subjects:
+- kind: ServiceAccount
+  name: novossh-api
+  namespace: novossh
+
+---
+# RoleBinding for Web Frontend
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: novossh-web
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: novossh-web
+subjects:
+- kind: ServiceAccount
+  name: novossh-web
+  namespace: novossh
+
+---
+# RoleBinding for Jobs
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: novossh-jobs
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: novossh
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: novossh-jobs
+subjects:
+- kind: ServiceAccount
+  name: novossh-jobs
+  namespace: novossh
+
+---
+# ClusterRole for reading Kubernetes cluster info (cross-namespace)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: novossh-cluster-reader
+  labels:
+    app.kubernetes.io/name: novossh
+rules:
+# Read nodes for topology awareness
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list", "watch"]
+# Read namespaces
+- apiGroups: [""]
+  resources: ["namespaces"]
+  verbs: ["get", "list"]
+# Read persistent volumes
+- apiGroups: [""]
+  resources: ["persistentvolumes"]
+  verbs: ["get", "list"]
+# Read storage classes
+- apiGroups: ["storage.k8s.io"]
+  resources: ["storageclasses"]
+  verbs: ["get", "list"]
+# Read Kubernetes API info
+- apiGroups: [""]
+  resources: ["componentstatuses"]
+  verbs: ["get", "list"]
+
+---
+# ClusterRoleBinding for API Server
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: novossh-api-cluster-reader
+  labels:
+    app.kubernetes.io/name: novossh
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: novossh-cluster-reader
+subjects:
+- kind: ServiceAccount
+  name: novossh-api
+  namespace: novossh
+
+---
+# ClusterRole for Prometheus (monitoring)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+rules:
+- apiGroups: [""]
+  resources:
+  - nodes
+  - nodes/proxy
+  - services
+  - endpoints
+  - pods
+  - events
+  - namespaces
+  - persistentvolumes
+  - persistentvolumeclaims
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["apps"]
+  resources:
+  - statefulsets
+  - daemonsets
+  - deployments
+  - replicasets
+  verbs: ["get", "list", "watch"]
+- apiGroups: ["batch"]
+  resources:
+  - jobs
+  - cronjobs
+  verbs: ["get", "list", "watch"]
+
+---
+# ClusterRoleBinding for Prometheus
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: prometheus
+  labels:
+    app.kubernetes.io/name: prometheus
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prometheus
+subjects:
+- kind: ServiceAccount
+  name: prometheus
+  namespace: novossh
+
+---
+# Service Account for Prometheus
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prometheus
+  namespace: novossh
+  labels:
+    app.kubernetes.io/name: prometheus

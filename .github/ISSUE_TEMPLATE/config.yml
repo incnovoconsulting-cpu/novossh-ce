@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Security vulnerability
+    url: https://github.com/incnovoconsulting-cpu/novossh-ce/security/advisories/new
+    about: Report security issues privately via GitHub Security Advisories
+  - name: Hosted product support (novossh.com)
+    url: mailto:support@novoconsultinginc.org
+    about: Account or billing support for the hosted novossh.com service (not this open source repo)

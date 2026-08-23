@@ -1,0 +1,190 @@
+:root {
+  --frame-bg: var(--ink-900, #020617);
+  --frame-border: rgba(255, 255, 255, 0.1);
+  --frame-text: var(--slate-200, #e2e8f0);
+  --frame-accent: #3b82f6;
+  --command-bg: rgba(59, 130, 246, 0.05);
+  --output-bg: rgba(100, 116, 139, 0.05);
+  --sync-bg: rgba(34, 197, 94, 0.05);
+  --exit-success: #10b981;
+  --exit-error: #ef4444;
+}
+
+.frame {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  background-color: var(--frame-bg);
+  border: 1px solid var(--frame-border);
+  border-radius: 6px;
+  font-family: 'JetBrains Mono', Menlo, Monaco, Consolas, monospace;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--frame-text);
+  transition: all 0.2s ease;
+}
+
+.frame:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.02);
+}
+
+.frame.highlighted {
+  border-color: var(--frame-accent);
+  background-color: rgba(59, 130, 246, 0.08);
+  box-shadow: 0 0 0 1px var(--frame-accent);
+}
+
+.commandFrame {
+  background-color: var(--command-bg);
+  border-color: rgba(59, 130, 246, 0.2);
+}
+
+.outputFrame {
+  background-color: var(--output-bg);
+  border-color: rgba(100, 116, 139, 0.2);
+}
+
+.syncFrame {
+  background-color: var(--sync-bg);
+  border-color: rgba(34, 197, 94, 0.2);
+}
+
+.frameHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.frameType {
+  font-weight: 600;
+  color: var(--frame-accent);
+  min-width: 16px;
+}
+
+.timestamp {
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 11px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.5px;
+}
+
+.userName {
+  padding: 2px 6px;
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.syncLabel {
+  padding: 2px 6px;
+  background-color: rgba(34, 197, 94, 0.2);
+  border-radius: 3px;
+  font-size: 11px;
+  color: var(--exit-success);
+  font-weight: 500;
+}
+
+.commandContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.command {
+  margin: 0;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-left: 2px solid var(--frame-accent);
+  border-radius: 3px;
+  color: #60a5fa;
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.outputContent {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.output {
+  margin: 0;
+  padding: 8px;
+  background-color: rgba(0, 0, 0, 0.3);
+  border-left: 2px solid #64748b;
+  border-radius: 3px;
+  color: rgba(255, 255, 255, 0.8);
+  word-break: break-all;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+.frameFooter {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.exitCode {
+  padding: 3px 6px;
+  border-radius: 3px;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.exitCodeSuccess {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: var(--exit-success);
+}
+
+.exitCodeError {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--exit-error);
+}
+
+/* Scrollbar styling for output content */
+.outputContent::-webkit-scrollbar {
+  width: 6px;
+}
+
+.outputContent::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.outputContent::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 3px;
+}
+
+.outputContent::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .frame {
+    padding: 10px;
+    gap: 6px;
+    font-size: 12px;
+  }
+
+  .frameHeader {
+    gap: 8px;
+  }
+
+  .command,
+  .output {
+    padding: 6px;
+    font-size: 11px;
+  }
+}

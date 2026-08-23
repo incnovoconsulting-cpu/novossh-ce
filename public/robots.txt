@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /ws/
+Disallow: /verify-email
+
+Sitemap: https://novossh.com/sitemap.xml
